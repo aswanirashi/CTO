@@ -26,7 +26,7 @@ public class SimulationEnvironment extends SimState implements Runnable{
      Double2D[] agentPos;
      Double2D[] targetPos;
      Double2D[] subsetPos;
-     public int NUM_SUBSET = 3;
+     public int NUM_SUBSET =6;
      public int[] subsetIndex= null,count;
      public int[] subsetFlag;
      public static int [] stepsRemaining = new int[NUM_AGENTS];
@@ -98,7 +98,7 @@ public class SimulationEnvironment extends SimState implements Runnable{
 		targetSpace = new Continuous2D(8.0,gridWidth, gridHeight);
 		for(int i=0; i<NUM_SUBSET; i++)
 		{
-			Diagonal[i] = new Double2D((i+1)* (double)gridWidth/NUM_SUBSET,(i+1)* (double)gridHeight/NUM_SUBSET);
+			Diagonal[i] = new Double2D(i*((double)gridWidth/(NUM_SUBSET-1)),i*((double)gridHeight/(NUM_SUBSET-1)));
 			System.out.print("Diagonal points are "+ Diagonal[i] +"\n" );
 		}
 		
@@ -141,8 +141,8 @@ public class SimulationEnvironment extends SimState implements Runnable{
 			System.out.println("subsetnumber" + subsetIndex[i]);
 		}
 		
-	//	for(int i=0;i<NUM_SUBSET;i++)
-	//		System.out.print("count before is " + count[i]+ "\n");
+		for(int i=0;i<NUM_SUBSET;i++)
+			System.out.print("count before is " + count[i]+ "\n");
 		NUM_AGENTS_IN_SUBSET= NUM_AGENTS/(NUM_SUBSET);
 		for(int i=0;i<NUM_SUBSET-1;i++)
 		{
@@ -183,6 +183,8 @@ public class SimulationEnvironment extends SimState implements Runnable{
 		//	else 
 		//		System.out.print("Count is perfect\n");		
 		}
+		for(int i=0;i<NUM_AGENTS;i++)
+			System.out.print("subset after is " + subsetIndex[i]+ "\n");
 		int newSubsetFlag=1;
 		for(int i=0;i<NUM_SUBSET;i++)
 		{
@@ -194,28 +196,18 @@ public class SimulationEnvironment extends SimState implements Runnable{
 					if(newSubsetFlag==1)
 					{
 						Particle1 p = new Particle1(agentPos[j],"Agent"+j);
+						schedule.scheduleRepeating(p);
+
 						newSubsetFlag=0;
 					}
+					else{
 					Particle p1  = new Particle(agentPos[j],"Agent"+j);
 					agentSpace.setObjectLocation(p1,agentPos[j]);
 					//System.out.print("calling partile schedule repeating\n");
-					schedule.scheduleRepeating(p1);
+					}
 				}
 			}
 		}
-		
-		//System.out.println("Control at the end\n");
-
-	     
-	///		start();
-		/*	while(countSteps<1500){
-			System.out.print("StopFlag "+ countSteps + "\n");
-
-		}
-		finish();
-		schedule.clear();
-		start();
-		*/
 		}
     boolean conflict( final Object agent1, final Double2D a, final Object agent2, final Double2D b )
     {

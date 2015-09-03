@@ -73,7 +73,7 @@ public class Particle1 extends sim.portrayal.simple.OvalPortrayal2D implements S
         }
         else
             {
-            /*if( steps <= 0 || steps == 100)
+            if( steps <= 0 || steps == 100)
                 {
             	double xmin, xmax, ymin, ymax;
             	desiredLocation = new Double2D();
@@ -92,7 +92,7 @@ public class Particle1 extends sim.portrayal.simple.OvalPortrayal2D implements S
             	//desiredLocation = new Double2D(50.0,50.0);
                 steps = 100;
                 }
-                */
+                
             }
         //System.out.println(desiredLocation);
         double dx = desiredLocation.x - location.x;
